@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <?php  header("Content-Type: text/html;charset=UTF-8");?>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Thông tin cá nhân</title>
+    <?php
+       echo '<base href="'.$_SESSION['BASE_URL'].'/" />';
+       echo  '<link rel="icon" href="'.$_SESSION['BASE_URL'].'//etc/img/HUST_logo.jpg">';
+       ?>
+    <link rel="stylesheet" href="etc/css/bootstrap.min.css">
+    <link rel="stylesheet" href="etc/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="etc/css/custom.css">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="etc/js/bootstrap.min.js"></script>
+  </head>
+  
+  <body>
+    <?php
+       $page = 'thong tin ca nhan';
+       include $_SESSION['BASE_PATH'].'/views/user/navbar.html';
+       ?>
+    
+    <div id="mainContent">
+         <div class="container">
+             <div class="page-header" style="width: 80%">
+        <h1>Thông tin cá nhân</h1>
+      </div>
+      <div class="col-md-6 col-md-offset-1">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <b>Thông tin sinh viên</b>
+          </div>
+          <table class="table table-hover">
+            <tbody>
+              <tr>
+                <th class="col-md-4" style="text-align:right;">Mã số sinh viên</th>
+                <td class="col-md-1" style="text-align:center;">:</td>
+                <td class="col-md-6"><?php
+					echo htmlspecialchars($common_info['username']);
+					?></td>
+              </tr>
+              <tr>
+                <th style="text-align:right;">Họ tên sinh viên</th>
+                <td style="text-align:center;">:</td>
+                <td><?php
+		       echo htmlspecialchars($common_info['fullname']);
+		       ?></td>
+              </tr>
+              <tr>
+                <th style="text-align:right;">Ngày sinh</th>
+                <td style="text-align:center;">:</td>
+                <td><?php
+                       echo htmlspecialchars($common_info['birth']);
+                       ?></td>
+              </tr>
+              <tr>
+                <th style="text-align:right;">Giới tính</th>
+                <td style="text-align:center;">:</td>
+                <td><?php
+		       echo htmlspecialchars($common_info['sex']);
+		       ?></td>
+              </tr>
+              <tr>
+                <th style="text-align:right;">Quê quán</th>
+                <td style="text-align:center;">:</td>
+                <td><?php
+		       echo htmlspecialchars($common_info['native_land']);
+		       ?></td>
+              </tr>
+              <tr>
+                <th style="text-align:right;">Khóa</th>
+                <td style="text-align:center;">:</td>
+                <td><?php
+                       echo htmlspecialchars($common_info['course']);
+                       ?></td>
+              </tr>
+              <tr>
+                <th style="text-align:right;">Lớp</th>
+                <td style="text-align:center;">:</td>
+                <td><?php
+                       echo htmlspecialchars($common_info['class']);
+                       ?></td>
+              </tr>
+              <tr>
+                <th style="text-align:right;">Chương trình</th>
+                <td style="text-align:center;">:</td>
+                <td><?php
+                       echo htmlspecialchars($common_info['training_system']);
+                       ?></td>
+              </tr>
+              <tr>
+                <th style="text-align:right;">Hệ học</th>
+                <td style="text-align:center;">:</td>
+                <td><?php
+                       echo htmlspecialchars($common_info['level_school']);
+                       ?></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    </div>
+	  
+    <?php
+       include $_SESSION['BASE_PATH'].'/views/user/footer.html';
+       ?>
+    
+  </body>
+
+</html>

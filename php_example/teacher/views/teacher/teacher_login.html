@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html id="login">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Đăng nhập</title>
+    <?php
+       echo '<base href="'.$_SESSION['BASE_URL'].'/" />';
+    echo  '<link rel="icon" href="'.$_SESSION['BASE_URL'].'//etc/img/HUST_logo.jpg">';
+    ?>
+    <link rel="stylesheet" href="etc/css/bootstrap.min.css">
+    <link rel="stylesheet" href="etc/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="etc/css/teacher_custom.css">
+    <script type="text/javascript" src="etc/js/bootstrap.min.js"></script>
+</head>
+
+<body id="login">
+<div class="container">
+    <?php
+         echo '<img class="loginmainimg" style="" src="'.$_SESSION['BASE_URL'].'/etc/img/HUST_logo.jpg" alt="HUST">';
+    ?>
+    <form class="form-signin" role="form" method="post" action="">
+        <h2 class="form-signin-heading" style="text-align:center;">Đăng nhập</h2>
+        <label for="inputId" class="sr-only">Tài khoản</label>
+        <input name="teacher_id" type="text" id="inputId" class="form-control" placeholder="Nhập tài khoản" required autofocus>
+        <label for="inputPassword" class="sr-only">Mật khẩu</label>
+        <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Nhập mật khẩu" required>
+        <?php
+	   if ( isset ( $error_login) ){
+     echo '<div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <strong>Cảnh báo! </strong>';
+        echo $error_login;
+        echo '</div>';
+}
+?>
+<button name="login" class="btn btn-lg btn-primary btn-block" type="submit">Đăng nhập</button>
+</form>
+</div>
+</body>
+
+</html>

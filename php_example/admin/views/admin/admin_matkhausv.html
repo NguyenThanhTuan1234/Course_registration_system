@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Cấp lại mật khẩu sinh viên</title>
+    <?php
+       echo '<base href="'.$_SESSION['BASE_URL'].'/" />';
+       echo  '<link rel="icon" href="'.$_SESSION['BASE_URL'].'//etc/img/HUST_logo.jpg">';
+       ?>  
+    <link rel="stylesheet" href="etc/css/bootstrap.min.css">
+    <link rel="stylesheet" href="etc/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="etc/css/admin_custom.css">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="etc/js/bootstrap.min.js"></script>
+  </head>
+
+  <body>
+    <?php $page = 'mat khau sinh vien';
+	  include $_SESSION['BASE_PATH'].'/views/admin/admin_navbar.html';
+	  ?>
+
+    <div class="container-fluid">
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <h1 class="page-header">Cấp lại mật khẩu cho sinh viên</h1>
+        
+        <form class="form-horizontal" role="form" method="post" action="" >
+          <div class="form-group">
+            <label for="StudentId" class="col-sm-2 control-label">Tìm theo mã số sinh viên</label>
+            <div class="col-sm-5">
+              <input name="username_student" type="number" class="form-control" id="StudentId" min="0" placeholder="Mã số sinh viên">
+            </div>
+          </div>
+	  <?php
+	     if ( isset( $error_find_student ) ){
+	     echo '<div class="alert alert-warning alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                      <strong>Cảnh báo! </strong>';
+	     echo $error_find_student;
+             echo '</div>';
+             unset($error_find_student);
+	     }
+	     ?>
+          <div class="form-group">
+            <div class="col-sm-5 col-sm-offset-2">
+              <button name="find_student" type="submit" class="btn btn-primary">Tìm</button>
+            </div>
+          </div>
+        </form>
+        <br>
+        <form class="form-horizontal" role="form" method="post" action="" >
+          <div class="form-group">
+            <label for="StudentId" class="col-sm-2 control-label">Mã số sinh viên</label>
+            <div class="col-sm-8">
+	      <?php
+		 if ( isset( $student ) ){ 
+		 echo '<input name="username" type="number" class="form-control" id="StudentId" value="'.htmlspecialchars($student['username']).'" readonly>';
+		 } else {
+		 echo '<input name="username" type="number" class="form-control" id="StudentId" value="" readonly>';
+		 }
+		 ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="StudentName" class="col-sm-2 control-label">Họ tên sinh viên</label>
+            <div class="col-sm-8">
+	      <?php
+		 if ( isset( $student ) ){ 
+		 echo '<input type="text" class="form-control" id="StudentName" value="'.htmlspecialchars($student['fullname']).'" readonly>';
+		 } else {
+		 echo '<input type="text" class="form-control" id="StudentName" value="" readonly>';
+		 }
+		 ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="StudentPassword" class="col-sm-2 control-label">Mật khẩu mới</label>
+            <div class="col-sm-5">
+              <input name="new_password" type="password" class="form-control" id="StudentPassword" placeholder="Mật khẩu mới">
+            </div>
+          </div>
+	  <?php
+	     if ( isset( $error_set_password ) ){
+	     echo '<div class="alert alert-danger alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                      <strong>Cảnh báo! </strong>';
+	     echo $error_set_password;
+             echo '</div>';
+             unset($error_set_password);
+	     }
+	     if ( isset( $set_password_success ) ){
+	     echo '<div class="alert alert-success alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                      <strong>Thành công! </strong>';
+	     echo $set_password_success;
+             echo '</div>';
+             unset( $set_password_success );
+	     }	     
+	     ?>
+          <div class="form-group">
+            <div class="col-sm-5 col-sm-offset-2">
+              <button name="set_password" type="submit" class="btn btn-primary">Cấp lại mật khẩu</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+  </body>
+  
+</html>

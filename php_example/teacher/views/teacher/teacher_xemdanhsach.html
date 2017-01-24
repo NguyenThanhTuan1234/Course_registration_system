@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Xem danh sách lớp học</title>
+    <?php
+       echo '<base href="'.$_SESSION['BASE_URL'].'/" />';
+    echo  '<link rel="icon" href="'.$_SESSION['BASE_URL'].'//etc/img/HUST_logo.jpg">';
+    ?>
+    <link rel="stylesheet" href="etc/css/bootstrap.min.css">
+    <link rel="stylesheet" href="etc/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="etc/css/teacher_custom.css">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="etc/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="etc/js/teacher_custom.js"></script>
+</head>
+
+<body>
+<?php $page = 'xem danh sach';
+	  include $_SESSION['BASE_PATH'].'/views/teacher/teacher_navbar.html';
+	  ?>
+
+<div class="container-fluid">
+    <div class="panel panel-primary">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="text-align:center;">
+            <h3>Danh sách lớp học</h3>
+        </div>
+        <div class="panel-body col-md-10 col-md-offset-2">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>Mã Lớp</th>
+                    <th>Mã HP</th>
+                    <th>Số sinh viên</th>
+                    <th>Xem danh sách</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+		      while( $row_list_class = mysqli_fetch_assoc( $list_class )){
+		       $class = mysqli_fetch_assoc($class_obj->get_class_info_by_id($row_list_class['id']));
+                echo '<tr>';
+                    echo '<td>'.htmlspecialchars($class['id_class']).'</td>';
+                    echo '<td>'.htmlspecialchars($class['id_subject']).'</td>';
+                    if($class['signed']==0){
+                    $class['signed']=0;
+                    }
+                    echo '<td>'.$class['signed'].'/'.$class['max_sign'].'</td>';
+                    echo '<td><button type="button" class="hide_show" data-target="#'.$class['id_class'].'">Xem</button></td>';
+                    echo '</tr>';
+                }
+                echo '</tbody>';
+                echo '</table>';
+            ?>
+            <?php
+            $list_class = $teacher_Obj->get_class_by_teacher_id( $_SESSION['teacher_id']);
+            while( $row_list_class = mysqli_fetch_assoc( $list_class )){
+		       $class = mysqli_fetch_assoc($class_obj->get_class_info_by_id($row_list_class['id']));
+            $list_student = $class_obj->get_list_student_by_id_class( $class['id_class']);
+            echo '<div class="panel-body text" style="display: none" id="'.$class['id_class'].'">';
+            echo '<div class="col-md-12" style="text-align:center;">';
+                echo '<h3>Lớp '.htmlspecialchars($class['id_class']).'</h3>';
+            echo '</div>';
+                echo '<table class="table table-bordered table-hover">';
+                    echo '<thead>';
+                    echo '<tr>';
+                        echo '<th>MSSV</th>';
+                        echo '<th>Tên sinh viên</th>';
+                        echo '<th>Giới tính</th>';
+                        echo '<th>Ngày sinh</th>';
+                    echo '</tr>';
+                    echo '</thead>';
+                    echo '<tbody>';
+                while( $row_list_student = mysqli_fetch_assoc($list_student)){
+                $student = mysqli_fetch_assoc($user_obj->get_common_info_by_username( $row_list_student['username']));
+                echo '<tr>';
+                    echo '<td>'.htmlspecialchars($student['username']).'</td>';
+                    echo '<td>'.htmlspecialchars($student['fullname']).'</td>';
+                    echo '<td>'.htmlspecialchars($student['sex']).'</td>';
+                    echo '<td>'.htmlspecialchars($student['birth']).'</td>';
+                    }
+                    echo '</tbody>';
+                echo '</table>';
+            echo '</div>';
+            }
+            ?>
+        </div>
+    </div>
+</div>
+</body>
+</html>

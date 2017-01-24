@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Viết thông báo</title>
+    <?php
+       echo '<base href="'.$_SESSION['BASE_URL'].'/" />';
+       echo  '<link rel="icon" href="'.$_SESSION['BASE_URL'].'//etc/img/HUST_logo.jpg">';
+       ?>
+    <link rel="stylesheet" href="etc/css/bootstrap.min.css">
+    <link rel="stylesheet" href="etc/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="etc/css/admin_custom.css">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="etc/js/bootstrap.min.js"></script>
+  </head>
+
+  <body>
+    <?php $page = 'viet thong bao';
+	  include $_SESSION['BASE_PATH'].'/views/admin/admin_navbar.html';
+	  ?>
+
+    <div class="container-fluid">
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <h1 class="page-header">Viết thông báo</h1>
+        
+        <form role="form" method="post" action="" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="Title">Tiêu đề</label>
+            <input name="title" type="text" class="form-control" id="Title" placeholder="Tiêu đề" required autofocus>
+          </div>
+          <div class="form-group">
+            <label for="NoticeType">Loại thông báo</label>
+            <select name="select_category" class="form-control">
+              <option value="0" selected>Thông báo của ban quản trị</option>
+              <option value="1" >Thông báo đăng ký học tập</option>
+              <option value="2" >Thông báo xét nhận đồ án tốt nghiệp</option>
+              <option value="3" >Thông báo xét tốt nghiệp</option>
+              <option value="4" >Thông báo xử lý học tập</option>
+	      <option value="5" >Thông báo thi cử</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="Brief">Tóm tắt</label>
+            <input name="brief" type="text" class="form-control" id="Brief" placeholder="Tóm tắt nội dung chính">
+          </div>
+
+          <div class="form-group">
+            <label for="Brief">Mở đầu</label>
+            <input name="header" type="text" class="form-control" id="Brief" placeholder="Mở đầu">
+          </div>	  
+	  
+          <div class="form-group">
+            <label for="Content">Nội dung</label>
+            <textarea name="content" class="form-control" rows="10" id="Content" placeholder="Nội dung thông báo" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="InputFile">File đính kèm</label>
+            <input type="file" name="file_attack" id="InputFile">
+          </div>
+	  <?php
+             if ( isset($error_post) ){
+             echo '<div class="alert alert-danger alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                      <strong>Cảnh báo! </strong>';     
+             echo $error_post;                                                                    
+             echo '</div>';
+             unset($error_post);
+             }
+             if ( isset($sucess_post) ){
+             echo '<div class="alert alert-success alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                      <strong>Chúc mừng! </strong>';
+             echo $sucess_post;
+             echo '</div>';
+             unset($sucess_post);
+             }
+             ?>
+          <button name="post" type="submit" class="btn btn-primary">Tạo thông báo</button>
+        </form>
+      </div>
+    </div>
+    
+  </body>
+  
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Danh sách lớp học</title>
+    <?php
+       echo '<base href="'.$_SESSION['BASE_URL'].'/" />';
+       echo  '<link rel="icon" href="'.$_SESSION['BASE_URL'].'//etc/img/HUST_logo.jpg">';
+       ?>
+    <link rel="stylesheet" href="etc/css/bootstrap.min.css">
+    <link rel="stylesheet" href="etc/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="etc/css/custom.css">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="etc/js/bootstrap.min.js"></script>
+  </head>
+
+  <body>
+    <?php
+       $page = 'danh sach lop hoc';
+       include $_SESSION['BASE_PATH'].'/views/user/navbar.html';
+       ?>
+       <div id="mainContent">
+    <div class="container-fluid">
+      <div class="page-header">
+        <h1>Danh sách lớp</h1>
+      </div>
+      <form class="form-horizontal" role="form" method="post" action="">
+        <div class="form-group">
+          <label class="col-sm-2 control-label" style="text-align:left;">Học kỳ</label>
+          <div class="col-sm-2">
+            <select name="semester_select" class="form-control">
+	      <?php
+		 if ( $selected_semester == "default"){
+		 echo '<option value="default" selected>Chọn học kỳ</option>';
+		 } else {
+		 echo '<option value="default" >Chọn học kỳ</option>';
+		 }
+		 while ( $row_list_of_semester = mysqli_fetch_array($list_of_semester)){
+		 if ( $selected_semester == $row_list_of_semester['semester']){
+		 echo '<option value="'.$row_list_of_semester['semester'].'" selected>'.$row_list_of_semester['semester'].'</option>';
+		 } else {
+		 echo '<option value="'.$row_list_of_semester['semester'].'" >'.$row_list_of_semester['semester'].'</option>';
+		 }
+		 }
+		 ?>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" style="text-align:left;">Khoa/viện</label>
+          <div class="col-sm-4">
+            <select name="course_select" class="form-control">
+	      <?php
+		 if ($selected_course == "default"){
+		 echo '<option value="default" selected>Chọn khoa viện</option>';
+		 } else {
+		 echo '<option value="default" >Chọn khoa viện</option>';
+		 }
+		 while ( $row_list_of_course = mysqli_fetch_array($list_of_course) ){
+		 if ( $row_list_of_course['course'] == $selected_course){
+		 echo '<option value="'.$row_list_of_course['course'].'" selected >'.$row_list_of_course['course'].'</option>';
+		 } else {
+		 echo '<option value="'.$row_list_of_course['course'].'">'.$row_list_of_course['course'].'</option>';
+		 }
+		 }
+		 ?>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputStudentId" class="col-sm-2 control-label" style="text-align:left;">hoặc mã lớp</label>
+          <div class="col-sm-4">
+            <input name="id_class" type="text" class="form-control" id="inputStudentId" placeholder="Nhập mã lớp">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputStudentName" class="col-sm-2 control-label" style="text-align:left;">hoặc mã học phần</label>
+          <div class="col-sm-4">
+            <input name="id_subject" type="text" class="form-control" id="inputStudentName" placeholder="Nhập mã học phần">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-6 col-sm-offset-2">
+            <button name="find" type="submit" class="btn btn-primary">Tìm</button>
+          </div>
+        </div>
+      </form>
+
+      <div class="panel panel-primary">
+        <div class="panel-heading" style="text-align:center;">
+          <b>Danh sách các lớp</b>
+        </div>
+        <div class="panel-body">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>Mã lớp</th>
+                <th>Mã HP</th>
+                <th>Tên học phần</th>
+                <th>Ghi chú</th>
+                <th>Trạng thái</th>
+                <th>Min ĐK</th>
+                <th>Max ĐK</th>
+                <th>Đã ĐK</th>
+                <th>Khoa/viện</th>
+              </tr>
+            </thead>
+            <tbody>
+	      <?php
+		 if ( isset ( $list_class ) ){
+
+		 while ( $row_of_list_class = mysqli_fetch_array ( $list_class)){
+		 echo '<tr>';
+		 echo '<td>'.htmlspecialchars($row_of_list_class['id_class']).'</td>';
+		 echo '<td>'.htmlspecialchars($row_of_list_class['id_subject']).'</td>';
+		 echo '<td>'.htmlspecialchars($row_of_list_class['name_subject']).'</td>';
+		 echo '<td>'.htmlspecialchars($row_of_list_class['note']).'</td>';
+		 echo '<td>'.htmlspecialchars($row_of_list_class['status']).'</td>';
+		 echo '<td>'.htmlspecialchars($row_of_list_class['min_sign']).'</td>';
+		 echo '<td>'.htmlspecialchars($row_of_list_class['max_sign']).'</td>';
+		 echo '<td>'.htmlspecialchars($row_of_list_class['signed']).'</td>';
+		 echo '<td>'.htmlspecialchars($row_of_list_class['course']).'</td>';
+		 echo '</tr>';
+
+		 echo '<tr>';
+		 echo '<td colspan="9">
+                 <table class="table table-condensed">
+                   <thead>
+                     <tr>
+                       <th>Thứ</th>
+                       <th>Thời gian</th>
+                       <th>Tuần học</th>
+                       <th>Phòng học</th>
+                     </tr>
+                   </thead>
+                   <tbody>';
+		     $class_obj = new Class_Obj( );
+		     $info_of_class = $class_obj->get_time_class_by_id( $row_of_list_class['id_class'] );
+	      while ( $time = mysqli_fetch_array($info_of_class) ){
+              echo '<tr>';
+                echo '<td>'.htmlspecialchars($time['day_of_week']).'</td>';
+                echo '<td>'.htmlspecialchars($time['clock']).'</td>';
+                echo '<td>'.htmlspecialchars($time['week']).'</td>';
+                echo '<td>'.htmlspecialchars($time['place']).'</td>';
+                echo '</tr>';
+	      }
+              mysqli_free_result($info_of_class);
+	      echo '</tbody>';
+	    echo '</table>
+</td>
+</tr>';
+}
+}
+?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+       </div>
+    <?php
+       include $_SESSION['BASE_PATH'].'/views/user/footer.html';
+       ?>
+
+  </body>
+
+</html>

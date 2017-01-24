@@ -1,0 +1,97 @@
+/* CSS used here will be applied after bootstrap.css */
+html {
+	position: relative;
+	min-height: 100%;
+  min-width: 1500px;
+}
+body {
+	background: none;
+	margin-bottom: 100px;
+}
+
+html { 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+header {
+  width: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  color: #FFFFFF;
+  background: linear-gradient(#2060a0, #b0cae3);
+  padding: 5px;
+}
+
+footer {
+  width: 100%;
+  height: 55px;
+  position: absolute;
+  bottom: 0;
+  clear: both;
+  background-color: grey;
+  color: white;
+  text-align: center;
+  padding: 5px;
+}
+
+nav {
+  position: relative;
+  top: 10px;
+}
+
+pre {
+  font-family: monospace;
+  white-space: pre-wrap;
+  margin: 0 0;
+  border: 0;
+  background-color: #ffffff;
+}
+
+a.navdisabled {
+   pointer-events: none;
+   cursor: default;
+}
+
+b.h1 {
+  font-size: 120%;
+  color: yellow;
+}
+
+b.h2 {
+  font-size: 120%;
+  color: red;
+}
+
+b.sm {
+  font-size: 120%;
+  color: red;
+}
+
+.headertext {
+  padding: 15px 0px;
+}
+
+.page-header {
+  border-bottom: 1px solid #ddd;
+}
+
+a.logout {color:#0000ff;text-decoration:none;}
+a.logout:hover {color:#ff0000;text-decoration:none;}
+
+#mainpage:hover, .dropdown:hover{background-color: #ddd;}
+.dropdown:hover > .dropdown-menu{display:block;}
+  
+#loginheader {
+  padding: 25px;
+  margin-top: 30px;
+  margin-bottom: 50px;
+  color: #FFFFFF;
+  background: linear-gradient(#2060a0, #b0cae3);
+  border-radius: 25px;
+  box-shadow: 5px 5px 30px #888888;
+}

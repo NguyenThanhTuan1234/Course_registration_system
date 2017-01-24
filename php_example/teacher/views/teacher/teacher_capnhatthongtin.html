@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Cập nhật thông tin lớp học</title>
+    <?php
+       echo '<base href="'.$_SESSION['BASE_URL'].'/" />';
+    echo  '<link rel="icon" href="'.$_SESSION['BASE_URL'].'//etc/img/HUST_logo.jpg">';
+    ?>
+    <link rel="stylesheet" href="etc/css/bootstrap.min.css">
+    <link rel="stylesheet" href="etc/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="etc/css/teacher_custom.css">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="etc/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<?php $page = 'cap nhat thong tin';
+	  include $_SESSION['BASE_PATH'].'/views/teacher/teacher_navbar.html';
+	  ?>
+
+<div class="container-fluid">
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <h1 class="page-header" style="text-align: center;">Cập nhật thông tin lớp học</h1>
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="text-align:center;">
+            <h3>Thông tin lớp học</h3>
+        </div>
+        <div class="panel-body">
+            <form method="post" action="">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>Mã Lớp</th>
+                        <th>Mã HP</th>
+                        <th>Số sinh viên</th>
+                        <th>Ghi chú giáo viên</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+		      while( $row_list_class = mysqli_fetch_assoc( $list_class )){
+		       $class = mysqli_fetch_assoc($class_obj->get_class_info_by_id($row_list_class['id']));
+                    $content=htmlspecialchars($class['content']);
+                    echo '<tr>';
+		            echo '<td>'.htmlspecialchars($class['id_class']).'</td>';
+                    echo '<td>'.htmlspecialchars($class['id_subject']).'</td>';
+                        if($class['signed']==0){
+                        $class['signed']=0;
+                        }
+                    echo '<td>'.$class['signed'].'/'.$class['max_sign'].'</td>';
+                    echo '<td><input name="content'.$class['id_class'].'" type="text" class="form-control" id="Contetn" value="'.$content.'"></td>';
+                        echo '</tr>';
+                    }
+                    ?>
+                    </tbody>
+                </table>
+
+        </div>
+        <div class="panel-footer clearfix">
+            <div class="col-sm-offset-4 col-sm-4" style="text-align:center;">
+                <?php
+		 if ( isset($sucess_comit_point) ){
+		 echo '<div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <strong>Thành công! </strong>';
+                echo $sucess_comit_point;
+                echo '</div>';
+            unset( $sucess_comit_point);
+            echo '<button onclick="reload()" class="btn btn-primary btn-block">Refresh</button>';
+            }
+            else{
+            echo '<button name="commit_point" type="submit" class="btn btn-primary btn-block">Cập Nhật</button>';
+            }
+            ?>
+        </div>
+        </form>
+    </div>
+</div>
+</div>
+<script>
+    function reload(){
+        window.reload();
+    }
+</script>
+</body>
+</html>

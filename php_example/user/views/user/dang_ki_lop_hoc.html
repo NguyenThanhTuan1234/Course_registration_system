@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Đăng ký lớp học</title>
+    <?php
+       echo '<base href="'.$_SESSION['BASE_URL'].'/" />';
+       echo  '<link rel="icon" href="'.$_SESSION['BASE_URL'].'//etc/img/HUST_logo.jpg">';
+       ?>
+    <link rel="stylesheet" href="etc/css/bootstrap.min.css">
+    <link rel="stylesheet" href="etc/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="etc/css/custom.css">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="etc/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="etc/js/custom.js"></script>
+  </head>
+
+  <body>
+    <?php
+       $page = 'dang ky lop hoc';
+       include $_SESSION['BASE_PATH'].'/views/user/navbar.html';
+       ?>
+       <div id="mainContent">
+    <div class="container-fluid">
+      <div class="page-header">
+        <h1>Đăng ký lớp học</h1>
+      </div>
+      <form class="form-horizontal" role="form" method="post" action="">
+        <div class="form-group">
+          <label class="col-sm-2 control-label" style="text-align:left;">Học kỳ</label>
+          <div class="col-sm-2">
+            <select name="semester_select" class="form-control">
+	      <?php
+		 while ( $row_list_of_semester = mysqli_fetch_assoc($list_of_semester)){
+		 if ( $selected_semester == $row_list_of_semester['semester']){
+		 echo '<option value="'.$row_list_of_semester['semester'].'" selected>'.$row_list_of_semester['semester'].'</option>';
+		 } else {
+		 echo '<option value="'.$row_list_of_semester['semester'].'" >'.$row_list_of_semester['semester'].'</option>';
+		 }
+		 }
+		 ?>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" style="text-align:left;">Khoa/viện</label>
+          <div class="col-sm-4">
+            <select name="course_select" class="form-control">
+	      <?php
+		 if ($selected_course == "default"){
+		 echo '<option value="default" selected>Chọn khoa viện</option>';
+		 } else {
+		 echo '<option value="default" >Chọn khoa viện</option>';
+		 }
+		 while ( $row_list_of_course = mysqli_fetch_assoc($list_of_course) ){
+		 if ( $row_list_of_course['course'] == $selected_course){
+		 echo '<option value="'.$row_list_of_course['course'].'" selected >'.$row_list_of_course['course'].'</option>';
+		 } else {
+		 echo '<option value="'.$row_list_of_course['course'].'">'.$row_list_of_course['course'].'</option>';
+		 }
+		 }
+		 ?>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputSubjectId" class="col-sm-2 control-label" style="text-align:left;">Mã học phần</label>
+          <div class="col-sm-4">
+	    <?php
+	       if ( isset($last_id_subject)){
+	       echo '<input name="id_subject" value="'.htmlspecialchars($last_id_subject).'" type="text" class="form-control" id="inputSubjectId" placeholder="Nhập mã học phần">';
+	       } else {
+	       echo '<input name="id_subject" type="text" class="form-control" id="inputSubjectId" placeholder="Nhập mã học phần">';
+	       }
+	       ?>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputClassId" class="col-sm-2 control-label" style="text-align:left;">Mã lớp</label>
+          <div class="col-sm-4">
+	    <?php
+	       if( isset($last_id_class)){
+	       echo '<input name="id_class" value="'.htmlspecialchars($last_id_class).'" type="text" class="form-control" id="inputClassId" placeholder="Nhập mã lớp">';
+	       } else {
+	       echo '<input name="id_class" type="text" class="form-control" id="inputClassId" placeholder="Nhập mã lớp">';
+	       }
+	       ?>
+          </div>
+          <div class="col-sm-6">
+            <button name="find_register_class" type="submit" class="btn btn-primary">Tìm</button>
+          </div>
+        </div>
+      </form>
+
+      <div class="panel panel-primary">
+        <div class="panel-heading" style="text-align:center;">
+          <b>Danh sách các lớp mở đăng ký </b>
+        </div>
+        <div class="panel-body">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>Mã lớp</th>
+                <th>Mã HP</th>
+                <th>Tên học phần</th>
+                <th>Ghi chú</th>
+                <th>Trạng thái</th>
+                <th>Min ĐK</th>
+                <th>Max ĐK</th>
+                <th>Đã ĐK</th>
+                <th>Thứ</th>
+                <th>Thời gian</th>
+                <th>Tuần học</th>
+                <th>Phòng</th>
+                <th>Đăng ký</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php
+	      if ( isset ( $list_class ) ){
+
+	      while ( $row_of_list_class = mysqli_fetch_assoc ( $list_class)){
+	      $time_table_of_class = $class_obj->get_time_class_by_id( $row_of_list_class['id_class'] );
+	      $rowsp = mysqli_num_rows( $time_table_of_class);
+	      echo '<tr>';
+		  echo '<td rowspan="'.$rowsp.'" style="vertical-align:middle;" >'.htmlspecialchars($row_of_list_class['id_class']).'</td>';
+		  echo '<td rowspan="'.$rowsp.'" style="vertical-align:middle;" >'.htmlspecialchars($row_of_list_class['id_subject']).'</td>';
+		  echo '<td rowspan="'.$rowsp.'" style="vertical-align:middle;" >'.htmlspecialchars($row_of_list_class['name_subject']).'</td>';
+		  echo '<td rowspan="'.$rowsp.'" style="vertical-align:middle;" >'.htmlspecialchars($row_of_list_class['note']).'</td>';
+		  echo '<td rowspan="'.$rowsp.'" style="vertical-align:middle;" >'.htmlspecialchars($row_of_list_class['status']).'</td>';
+		  echo '<td rowspan="'.$rowsp.'" style="vertical-align:middle;" >'.htmlspecialchars($row_of_list_class['min_sign']).'</td>';
+		  echo '<td rowspan="'.$rowsp.'" style="vertical-align:middle;" >'.htmlspecialchars($row_of_list_class['max_sign']).'</td>';
+		  echo '<td rowspan="'.$rowsp.'" style="vertical-align:middle;" >'.htmlspecialchars($row_of_list_class['signed']).'</td>';
+		  $row_time_table_of_class = mysqli_fetch_assoc( $time_table_of_class);
+		  echo '<td>'.htmlspecialchars($row_time_table_of_class['day_of_week']).'</td>';
+		  echo '<td>'.htmlspecialchars($row_time_table_of_class['clock']).'</td>';
+		  echo '<td>'.htmlspecialchars($row_time_table_of_class['week']).'</td>';
+		  echo '<td>'.htmlspecialchars($row_time_table_of_class['place']).'</td>';
+		  echo '<td rowspan="'.$rowsp.'" style="vertical-align:middle;"> <form method="post" action="" ><button name="register_class" value="'.htmlspecialchars($row_of_list_class['id_class']).'" type="submit" class="btn btn-primary btn-xs">Đăng ký</button></form></td>';
+		  echo '</tr>';
+	      if( $rowsp > 1 ){
+	      while ( $row_time_table_of_class = mysqli_fetch_assoc( $time_table_of_class) ){
+            echo '<tr>';
+            echo '<td>'.htmlspecialchars($row_time_table_of_class['day_of_week']).'</td>';
+            echo '<td>'.htmlspecialchars($row_time_table_of_class['clock']).'</td>';
+            echo '<td>'.htmlspecialchars($row_time_table_of_class['week']).'</td>';
+            echo '<td>'.htmlspecialchars($row_time_table_of_class['place']).'</td>';
+            echo '</tr>';
+	      }
+	      }
+          mysqli_free_result( $time_table_of_class);
+	      }
+
+	      }
+	      ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+  <?php
+    if ($error_class!=""){
+      echo '<div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <strong>Cảnh báo! </strong>';
+      echo $error_class;
+      echo '</div>';
+      }
+  ?>
+
+      <div class="panel panel-primary">
+        <div class="panel-heading" style="text-align:center;">
+	  <?php
+	     if( isset($selected_semester)){
+	     echo '<b>Danh sách đăng ký lớp của sinh viên '.$_SESSION['fullname'].' học kỳ '.$selected_semester.' </b>';
+	     } else{
+	     echo '<b>Danh sách đăng ký lớp của sinh viên '.$_SESSION['fullname'].' </b>';
+	     }
+	     ?>
+        </div>
+        <div class="panel-body">
+	  <form method="post" action="">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>Mã lớp</th>
+                <th>Mã HP</th>
+                <th>Tên học phần</th>
+                <th>Trạng thái</th>
+                <th>Trạng thái ĐK</th>
+                <th>Tín chỉ</th>
+                <th>Chọn</th>
+              </tr>
+            </thead>
+            <tbody>
+	      <?php
+		 if ( isset ( $result_register_class_obj)){
+		 while( $row_list_register_class = mysqli_fetch_assoc($result_register_class_obj)){
+		 echo '<tr>';
+		 echo '<td>'.htmlspecialchars($row_list_register_class['id_class']).'</td>';
+		 echo '<td>'.htmlspecialchars($row_list_register_class['id_subject']).'</td>';
+		 echo '<td>'.htmlspecialchars($row_list_register_class['name_subject']).'</td>';
+		 echo '<td>'.htmlspecialchars($row_list_register_class['status']).'</td>';
+		 echo '<td>'.htmlspecialchars($row_list_register_class['register_status']).'</td>';
+		 echo '<td>'.htmlspecialchars($row_list_register_class['credits_subject']).'</td>';
+		 echo '<td>';
+		 echo '<input type="checkbox" name="un_register_class[]" id="blankCheckbox" value="'.htmlspecialchars($row_list_register_class['id_class']).'">';
+		 echo '</td>';
+		 echo '</tr>';
+		 }
+		 }
+		 ?>
+            </tbody>
+          </table>
+        </div>
+        <div class="panel-footer clearfix" style="border-bottom-style:solid; border-bottom-width:1px; border-bottom-color:#ddd;">
+          <div class="col-sm-offset-9 col-sm-3" style="text-align:center;">
+	    <?php
+	       if( isset($sum_credits_subject_by_semester)  )
+	       $row_sum_credits_subject_by_semester = mysqli_fetch_assoc ( $sum_credits_subject_by_semester);
+	       echo '<p>Tổng số tín chỉ đăng ký: '.htmlspecialchars($row_sum_credits_subject_by_semester['sum']).' </p>';
+	       ?>
+            <button name="unregister_class" type="submit" class="btn btn-primary btn-xs btn-block">Xóa các lớp đã chọn</button>
+          </div>
+        </div>
+	</form>
+        <div class="panel-body">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>Thứ</th>
+                <th>Thời gian</th>
+                <th>Tuần học</th>
+                <th>Phòng học</th>
+                <th>Mã HP</th>
+                <th>Lớp học</th>
+              </tr>
+            </thead>
+            <tbody>
+	      <?php
+        if ( isset ( $result_time_table_class_register)){
+		 while( $row_time_table_class_register = mysqli_fetch_assoc( $result_time_table_class_register) ){
+		 echo '<tr>';
+		 echo '<td>'.htmlspecialchars($row_time_table_class_register['day_of_week']).'</td>';
+		 echo '<td>'.htmlspecialchars($row_time_table_class_register['clock']).'</td>';
+		 echo '<td>'.htmlspecialchars($row_time_table_class_register['week']).'</td>';
+		 echo '<td>'.htmlspecialchars($row_time_table_class_register['place']).'</td>';
+		 echo '<td>'.htmlspecialchars($row_time_table_class_register['id_subject']).'</td>';
+		 echo '<td>'.htmlspecialchars($row_time_table_class_register['id_class']).'</td>';
+		 }
+     }
+		 ?>
+            </tbody>
+          </table>
+        </div>
+        <div class="panel-footer clearfix">
+          <div class="col-sm-offset-4 col-sm-4" style="text-align:center;">
+	    <form method="post" action="">
+              <button name="submit_register" type="submit" class="btn btn-primary btn-block">Gửi đăng ký</button>
+	    </form>
+          </div>
+        </div>
+      </div>
+    </div>
+       </div>
+<!--    <?php
+       include $_SESSION['BASE_PATH'].'/views/user/footer.html';
+       ?>-->
+
+  </body>
+
+</html>

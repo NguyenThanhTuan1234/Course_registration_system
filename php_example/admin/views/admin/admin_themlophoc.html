@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Thêm lớp học</title>
+    <?php
+       echo '<base href="'.$_SESSION['BASE_URL'].'/" />';
+    echo  '<link rel="icon" href="'.$_SESSION['BASE_URL'].'//etc/img/HUST_logo.jpg">';
+    ?>
+    <link rel="stylesheet" href="etc/css/bootstrap.min.css">
+    <link rel="stylesheet" href="etc/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="etc/css/admin_custom.css">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="etc/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+<?php $page = 'them lop';
+	  include $_SESSION['BASE_PATH'].'/views/admin/admin_navbar.html';
+	  ?>
+
+<div class="container-fluid">
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <h1 class="page-header">Thêm lớp học</h1>
+
+        <form class="form-horizontal" role="form" method="post" action="">
+            <div class="form-group">
+                <label for="ClassId" class="col-sm-2 control-label">Mã số lớp học</label>
+                <div class="col-sm-8">
+                    <input name="class_id" type="text" class="form-control" id="ClassId" placeholder="Mã số lớp học" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="CourseId" class="col-sm-2 control-label">Mã số môn học</label>
+                <div class="col-sm-8">
+                    <input name="class_course" type="text" class="form-control" id="CourseId" placeholder="Mã số môn học" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Semester" class="col-sm-2 control-label">Học kỳ</label>
+                <div class="col-sm-8">
+                    <input name="class_semester" type="number" class="form-control" id="Semester" placeholder="Học kỳ" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Min" class="col-sm-2 control-label">Đăng ký tối thiểu</label>
+                <div class="col-sm-8">
+                    <input name="class_min" type="number" class="form-control" id="Min" placeholder="Đăng ký tối thiểu" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Max" class="col-sm-2 control-label">Đăng ký tối đa</label>
+                <div class="col-sm-8">
+                    <input name="class_max" type="number" class="form-control" id="Max" placeholder="Đăng ký tối đa" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="TeacherId" class="col-sm-2 control-label">Mã số giáo viên</label>
+                <div class="col-sm-8">
+                    <input name="class_teacher" type="text" class="form-control" id="TeacherId" placeholder="Mã số giáo viên" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Note" class="col-sm-2 control-label">Ghi chú</label>
+                <div class="col-sm-8">
+                    <select name="class_note" class="form-control" id="Note" required>
+                        <option value="Lý thuyết">Lý thuyết</option>
+                        <option value="Lý thuyết + bài tập">Lý thuyết + bài tập</option>
+                        <option value="Thực hành">Thực hành</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Date" class="col-sm-2 control-label">Ngày học</label>
+                <div class="col-sm-8">
+                    <select name="class_date" class="form-control" id="Date" required>
+                        <option value="Thứ 2">Thứ 2</option>
+                        <option value="Thứ 3">Thứ 3</option>
+                        <option value="Thứ 4">Thứ 4</option>
+                        <option value="Thứ 5">Thứ 5</option>
+                        <option value="Thứ 6">Thứ 6</option>
+                        <option value="Thứ 7">Thứ 7</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Room" class="col-sm-2 control-label">Phòng học</label>
+                <div class="col-sm-8">
+                    <input name="class_room" type="text" class="form-control" id="Room" placeholder="Phòng học" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="StartWeek" class="col-sm-2 control-label">Tuần bắt đầu</label>
+                <div class="col-sm-8">
+                    <input name="class_sweek" type="number" class="form-control" id="StartWeek" placeholder="Tuần bắt đầu" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="EndWeek" class="col-sm-2 control-label">Tuần kết thúc</label>
+                <div class="col-sm-8">
+                    <input name="class_eweek" type="number" class="form-control" id="EndWeek" placeholder="Tuần kết thúc" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="StartHour" class="col-sm-2 control-label">Giờ học bắt đầu</label>
+                <div class="col-sm-8">
+                    <select name="class_shour" class="form-control" id="StartHour" required>
+                        <option value="06h45">06h45</option>
+                        <option value="07h35">07h35</option>
+                        <option value="08h30">08h30</option>
+                        <option value="09h20">09h20</option>
+                        <option value="10h15">10h15</option>
+                        <option value="11h05">11h05</option>
+                        <option value="12h30">12h30</option>
+                        <option value="13h20">13h20</option>
+                        <option value="14h15">14h15</option>
+                        <option value="15h05">15h05</option>
+                        <option value="16h00">16h00</option>
+                        <option value="16h50">16h50</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="EndHour" class="col-sm-2 control-label">Giờ học kết thúc</label>
+                <div class="col-sm-8">
+                    <select name="class_ehour" class="form-control" id="EndHour" required>
+                        <option value="07h30">07h30</option>
+                        <option value="08h20">08h20</option>
+                        <option value="09h15">09h15</option>
+                        <option value="10h05">10h05</option>
+                        <option value="11h00">11h00</option>
+                        <option value="11h50">11h50</option>
+                        <option value="13h15">13h15</option>
+                        <option value="14h05">14h05</option>
+                        <option value="15h00">15h00</option>
+                        <option value="15h50">15h50</option>
+                        <option value="16h45">16h45</option>
+                        <option value="17h35">17h35</option>
+                    </select>
+                </div>
+            </div>
+            <script>alert("<?php echo($error_add_class)?>")</script>
+            <script>alert("<?php echo($add_class_success)?>")</script>
+            <?php $add_class_success="";?>
+            <?php $error_add_class="";?>
+            <div class="col-sm-5 col-sm-offset-2">
+                <button name="add_class" type="submit" class="btn btn-primary">Thêm lớp học</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+
+</html>

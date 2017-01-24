@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Hướng dẫn đăng ký lớp</title>
+    <?php
+       echo '<base href="'.$_SESSION['BASE_URL'].'/" />';
+       echo  '<link rel="icon" href="'.$_SESSION['BASE_URL'].'//etc/img/HUST_logo.jpg">';
+       ?>
+    <link rel="stylesheet" href="etc/css/bootstrap.min.css">
+    <link rel="stylesheet" href="etc/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="etc/css/custom.css">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="etc/js/bootstrap.min.js"></script>
+  </head>
+  
+  <body>
+    <?php
+       $page = 'huong dan dang ky lop';
+       include $_SESSION['BASE_PATH'].'/views/user/navbar.html';
+       ?>
+       <div id="mainContent">
+    <div class="container-fluid">
+      <div class="page-header" style="width: 80%">
+        <h1>Hướng dẫn đăng ký lớp</h1>
+      </div>
+      Bước 1: vào phần Đăng ký học tập/Đăng ký lớp học
+      <br>
+      Giao diện của trang đăng ký lớp học:
+      <br>
+      Bước 2: Chọn học kỳ cần đăng ký.
+      <br>
+      Bước 3: nhập mã học phần cần đăng ký (Chú ý: có thể chọn thẳng mã học phần mà không cần chọn khoa viện quản lý). Danh sách các lớp có thể đăng ký của mã học phần đó sẽ thể hiện ở bảng danh sách lớp như trên hình bao gồm các thông tin về lớp, trạng thái, số lượng đăng ký, thời gian học…
+      <br>
+      Bước 4: kéo thanh trượt đến cột cuối cùng sẽ thấy nút đăng ký lớp.
+      <br>
+      Bước 5: Sau khi bấm nút đăng ký, lớp đó sẽ hiển thị ở bảng thứ 2 là danh sách đăng ký lớp. Trong quá trình chọn lớp nếu không muốn đăng ký nữa có thể sử dụng ô tích chọn và xóa các lớp chọn.
+      <br>
+      Bước 6: Bấm vào “Gửi đăng ký” để gửi danh sách các lớp muốn đăng ký về hệ thống. Đặc biệt chú ý: chỉ khi sinh viên bấm gửi đăng ký thì các môn chọn mới được cập nhật vào hệ thống. Sau khi gửi đăng ký phải theo dõi kết quả trong bảng danh sách đăng ký lớp. Những lớp nào hiện ở cột “trạng thái ĐK” là “Thành công” thì đăng ký đó mới thành công. Nếu là hết chỗ, sinh viên phải chọn xóa và gửi đăng ký thì mới đăng ký lại được lớp đó nếu trạng thái lớp quay về còn chỗ trống.
+    </div>
+       </div>
+    <?php
+       include $_SESSION['BASE_PATH'].'/views/user/footer.html';
+       ?>
+    
+  </body>
+
+</html>

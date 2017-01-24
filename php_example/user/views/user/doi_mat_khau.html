@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Đổi mật khẩu</title>
+    <?php
+       echo '<base href="'.$_SESSION['BASE_URL'].'/" />';
+       echo  '<link rel="icon" href="'.$_SESSION['BASE_URL'].'//etc/img/HUST_logo.jpg">';
+       ?>
+    <link rel="stylesheet" href="etc/css/bootstrap.min.css">
+    <link rel="stylesheet" href="etc/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="etc/css/custom.css">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="etc/js/bootstrap.min.js"></script>
+  </head>
+  
+  <body>
+    <?php
+       $page = 'doi mat khau';
+       include $_SESSION['BASE_PATH'].'/views/user/navbar.html';
+       ?>
+    
+    <div id="mainContent">
+         <div class="container">
+        <div class="page-header" style="width: 80%">
+        <h1>Đổi mật khẩu</h1>
+      </div>
+      <div class="col-md-8 col-md-offset-1">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <b>Thông tin tài khoản</b>
+          </div>
+          <div class="panel-body">
+            <form class="form-horizontal" role="form" method="POST" action="">
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Họ và tên</label>
+                <div class="col-sm-8">
+		  <?php
+                     echo '<p class="form-control-static">'.$_SESSION['fullname'].'</p>';
+		     ?>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Mã số sinh viên</label>
+                <div class="col-sm-8">
+		  <?php
+                     echo '<p class="form-control-static">'.$_SESSION['username'].'</p>';
+		     ?>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputPassword" class="col-sm-4 control-label">Mật khẩu cũ</label>
+                <div class="col-sm-8">
+                  <input name="oldpassword" type="password" class="form-control" id="inputPassword" placeholder="Nhập mật khẩu cũ">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputPassword" class="col-sm-4 control-label">Mật khẩu mới</label>
+                <div class="col-sm-8">
+                  <input name="newpassword" type="password" class="form-control" id="inputPassword" placeholder="Nhập mật khẩu mới">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputPassword" class="col-sm-4 control-label">Xác nhận mật khẩu mới</label>
+                <div class="col-sm-8">
+                  <input name="confirmnewpassword" type="password" class="form-control" id="inputPassword" placeholder="Nhập lại mật khẩu mới">
+                </div>
+              </div>
+	      <?php
+                 if ( isset($error_changepassword) ){
+                 echo '<div class="alert alert-danger alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                      <strong>Cảnh báo! </strong>';     
+                 echo $error_changepassword;                                                                    
+                 echo '</div>';
+                 unset($error_changepassword);
+                 }
+                 if ( isset($sucess_changepassword) ){
+                 echo '<div class="alert alert-success alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                      <strong>Chúc mừng! </strong>';
+                 echo $sucess_changepassword;
+                 echo '</div>';
+                 unset($sucess_changepassword);
+                 }
+                 ?>
+              <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-8">
+                  <button name="changepassword" type="submit" class="btn btn-primary">Đổi mật khẩu</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    
+    <?php
+       include $_SESSION['BASE_PATH'].'/views/user/footer.html';
+       ?>
+  </body>
+
+</html>

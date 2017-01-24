@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Cập nhật điểm lớp học</title>
+    <?php
+       echo '<base href="'.$_SESSION['BASE_URL'].'/" />';
+       echo  '<link rel="icon" href="'.$_SESSION['BASE_URL'].'//etc/img/HUST_logo.jpg">';
+       ?>  
+    <link rel="stylesheet" href="etc/css/bootstrap.min.css">
+    <link rel="stylesheet" href="etc/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="etc/css/admin_custom.css">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="etc/js/bootstrap.min.js"></script>
+  </head>
+
+  <body>
+    <?php $page = 'diem lop hoc';
+	  include $_SESSION['BASE_PATH'].'/views/admin/admin_navbar.html';
+	  ?>
+
+    <div class="container-fluid">
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <h1 class="page-header">Cập nhật điểm lớp học</h1>
+        
+        <form class="form-horizontal" role="form" method="post" action="" >
+          <div class="form-group">
+            <label for="ClassId" class="col-sm-2 control-label">Tìm theo mã lớp</label>
+            <div class="col-sm-4">
+              <input name="id_class" type="text" class="form-control" id="ClassId" placeholder="Mã lớp">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-5 col-sm-offset-2">
+              <button name="find_class" type="submit" class="btn btn-primary">Tìm</button>
+            </div>
+	    <?php
+               if ( isset($error_find_class) ){
+               echo '<div class="alert alert-warning alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                      <strong>Cảnh báo! </strong>';     
+               echo $error_find_class;                                                                    
+               echo '</div>';
+               unset($error_find_class);
+               }
+               ?>
+          </div>
+        </form>
+        <div class="panel panel-primary">
+          <div class="panel-heading" style="text-align:center;">
+	    <?php
+	       if( isset($class)) {
+	       echo '<b>Bảng điểm lớp '.htmlspecialchars($class['id_class']).' học phần '.htmlspecialchars($class['id_subject']).' học kỳ '.$class['semester'].'</b>';
+	       } else {
+	       echo '<b>Bảng điểm lớp học</b>';
+	       }
+	       ?>
+          </div>
+          <div class="panel-body">
+	    <form method="post" action="">
+              <table class="table table-bordered table-hover">
+		<thead>
+                  <tr>
+                    <th>MSSV</th>
+                    <th>Tên sinh viên</th>
+                    <th>Điểm quá trình</th>
+                    <th>Điểm thi</th>
+                  </tr>
+		</thead>
+		<tbody>
+		  <?php
+		     if( isset($class)){
+		     while( $row_list_student = mysqli_fetch_array($list_student)){
+		     $student = mysqli_fetch_array($user_obj->get_info_user_by_username( $row_list_student['username']));
+		  echo '<tr>';
+		    echo '<td>'.htmlspecialchars($student['username']).'</td>';
+		    echo '<td>'.htmlspecialchars($student['fullname']).'</td>';
+		    $point_by_username_id_class = $class_obj->get_point_by_username_id_class( $student['username'], $class['id_class']);
+		    if( mysqli_num_rows($point_by_username_id_class)){
+		    $point = mysqli_fetch_array( $point_by_username_id_class);
+		    echo '<td><input name="midle'.$student['username'].'" type="number" min="0" max="10" step="0.5" class="form-control" id="Point" value="'.$point['midle_point'].'"></td>';
+		    echo '<td><input name="end'.$student['username'].'"type="number" min="0" max="10" step="0.5" class="form-control" id="Point" value="'.$point['end_point'].'"></td>';		  
+		    } else {
+		    echo '<td><input name="midle'.$student['username'].'" type="number" min="0" max="10" step="0.5" class="form-control" id="Point"></td>';
+		    echo '<td><input name="end'.$student['username'].'"type="number" min="0" max="10" step="0.5" class="form-control" id="Point"></td>';
+		    }
+		    echo '</tr>';
+		  }
+		  }
+		  ?>
+		</tbody>
+              </table>
+          </div>
+          <div class="panel-footer clearfix">
+            <div class="col-sm-offset-4 col-sm-4" style="text-align:center;">
+	      <?php
+		 if ( isset($sucess_comit_point) ){
+		 echo '<div class="alert alert-success alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                      <strong>Thành công! </strong>';     
+		 echo $sucess_comit_point;                                                                    
+		 echo '</div>';
+		 unset( $sucess_comit_point);
+		 }
+		 if ( isset($error_comit_point) ){
+		 echo '<div class="alert alert-danger alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                      <strong>Cảnh báo! </strong>';     
+		 echo $error_comit_point;                                                                    
+		 echo '</div>';
+		 unset( $error_comit_point);
+		 }
+		 if ( isset($class)){
+		 echo '<button name="commit_point" value="'.$class['id_class'].'" type="submit" class="btn btn-primary btn-block">Vào điểm</button>';
+		 } else {
+		 echo '<button name="commit_point" type="submit" class="btn btn-primary btn-block">Vào điểm</button>';
+		 }
+		 ?>
+            </div>
+          </div>
+	  </form>
+        </div>        
+      </div>
+    </div>
+  </body>
+</html>

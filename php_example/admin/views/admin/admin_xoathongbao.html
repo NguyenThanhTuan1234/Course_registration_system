@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Xóa thông báo</title>
+    <?php
+       echo '<base href="'.$_SESSION['BASE_URL'].'/" />';
+       echo  '<link rel="icon" href="'.$_SESSION['BASE_URL'].'//etc/img/HUST_logo.jpg">';
+       ?>   
+    <link rel="stylesheet" href="etc/css/bootstrap.min.css">
+    <link rel="stylesheet" href="etc/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="etc/css/admin_custom.css">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="etc/js/bootstrap.min.js"></script>
+  </head>
+
+  <body>
+    <?php $page = 'xoa thong bao';
+	  include $_SESSION['BASE_PATH'].'/views/admin/admin_navbar.html';
+	  ?>
+
+    <div class="container-fluid">
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <h1 class="page-header">Xoá thông báo</h1>
+        
+        <form class="form-horizontal" role="form" method="post" action="">
+	  
+          <div class="form-group">
+            <label for="NoticeId" class="col-sm-2 control-label">Mã số thông báo</label>
+            <div class="col-sm-4">
+              <input name="post_id" type="number" class="form-control" id="NoticeId" min="0" placeholder="Mã số thông báo">
+            </div>
+          </div>
+          <div class="form-group">
+	    <?php
+               if ( isset($error_find) ){
+               echo '<div class="alert alert-warning alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                      <strong>Cảnh báo! </strong>';     
+               echo $error_find;                                                                    
+               echo '</div>';
+               unset($error_find);
+               }
+               ?>
+            <div class="col-sm-5 col-sm-offset-2">
+              <button name="find_post_id" type="submit" class="btn btn-primary">Tìm</button>
+            </div>
+          </div>
+        </form>
+        <br>
+        <form role="form" method="post" action="">
+          <div class="form-group">
+            <label for="Title">Tiêu đề</label>
+	    <?php
+	       if( isset ($post)){
+	       echo '<input name="new_title" type="text" class="form-control" id="Title" placeholder="Tiêu đề" value="'.$post['title'].'" required autofocus readonly>';
+	       } else {
+	       echo '<input name="new_title" type="text" class="form-control" id="Title" placeholder="Tiêu đề" value="" required autofocus readonly>';
+	       }
+	       ?>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="NoticeType">Loại thông báo</label>
+                <select class="form-control" disabled>
+		  <?php
+		     if( isset($post) ) {
+		     switch ( $post['category_id']){
+		     case 0:
+		     echo '<option>Thông báo của ban Quản trị</option>';
+		     break;
+		     case 1:
+		     echo '<option>Thông báo đăng ký học tập</option>';
+		     break;
+		     case 2:
+		     echo '<option>Thông báo xét nhận đồ án tốt nghiệp</option>';
+		     break;
+		     case 3:
+		     echo '<option>Thông báo xét tốt nghiệp</option>';
+		     break;
+		     case 4:
+		     echo '<option>Thông báo xử lý học tập</option>';
+		     break;
+		     case 5:
+		     echo '<option>Thông báo thi cử</option>';
+		     break;
+		     }
+		     } else {
+		     echo '<option></option>';
+		     }
+		     ?>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="NoticeId">Mã số thông báo</label>
+		<?php
+		   if( isset($post)){
+		   echo '<input type="number" class="form-control" id="NoticeId" min="0" placeholder="'.$post['post_id'].'" readonly>';
+		   } else {
+		   echo '<input type="number" class="form-control" id="NoticeId" min="0" placeholder="Mã số thông báo" readonly>';
+		   }
+                   ?>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="Brief">Tóm tắt</label>
+	    <?php
+	       if ( isset( $post) ){
+	       echo '<input name="new_brief" type="text" class="form-control" id="Brief" placeholder="Tóm tắt nội dung chính" value="'.$post['brief'].'" readonly>';
+	       } else {
+	       echo '<input name="new_brief" type="text" class="form-control" id="Brief" placeholder="Tóm tắt nội dung chính" readonly>';
+	       }
+	       ?>
+          </div>
+          <div class="form-group">
+            <label for="Brief">Mở đầu</label>
+	    <?php
+	       if ( isset( $post) ){
+	       echo '<input name="new_header" type="text" class="form-control" id="Brief" placeholder="Mở đầu" value="'.$post['header'].'" readonly>';
+	       } else {
+	       echo '<input name="new_header" type="text" class="form-control" id="Brief" placeholder="Mở đầu" readonly>';
+	       }
+	       ?>
+          </div>	  
+          <div class="form-group">
+            <label for="Content">Nội dung</label>
+	    <?php
+	       if( isset($post)) {
+	       echo '<textarea name="new_content" class="form-control" rows="10" id="Content" placeholder="Nội dung thông báo" required readonly>'.$post['content'].'</textarea>';
+	       } else {
+	       echo '<textarea name="new_content" class="form-control" rows="10" id="Content" placeholder="Nội dung thông báo" required readonly></textarea>';
+	       }
+	       ?>
+          </div>
+          
+	  
+	  <?php
+             if ( isset($error_delete) ){
+             echo '<div class="alert alert-danger alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                      <strong>Cảnh báo! </strong>';     
+             echo $error_delete;                                                                    
+             echo '</div>';
+             unset($error_delete);
+             }
+             if ( isset($sucess_delete) ){
+             echo '<div class="alert alert-danger alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                      <strong>Thành công! </strong>';
+             echo $sucess_delete;
+             echo '</div>';
+             unset($sucess_delete);
+             }
+             ?>
+	  <?php
+	     if( isset($post)){
+	     echo '<button name="delete_post" value="'.$post['post_id'].'" type="submit" class="btn btn-primary">Xoá thông báo</button>';
+	     } else {
+	     echo '<button name="delete_post" value ="" type="submit" class="btn btn-primary">Xoá thông báo</button>';
+	     }
+	     ?>
+        </form>
+      </div>
+    </div>
+    
+  </body>
+  
+</html>

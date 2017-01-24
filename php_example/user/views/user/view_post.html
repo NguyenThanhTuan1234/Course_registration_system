@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Xem thông báo</title>
+    <?php
+       echo '<base href="'.$_SESSION['BASE_URL'].'/" />';
+       echo  '<link rel="icon" href="'.$_SESSION['BASE_URL'].'//etc/img/HUST_logo.jpg">';
+       ?>
+    <link rel="stylesheet" href="etc/css/bootstrap.min.css">
+    <link rel="stylesheet" href="etc/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="etc/css/custom.css">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  </head>
+  
+  <body>
+    <?php
+       $page = 'xem thong bao';
+       include $_SESSION['BASE_PATH'].'/views/user/navbar.html';
+       ?>
+      <div id="mainContent">
+      <div class="container">
+      <div class="page-header" style="width: 80%">
+        <h1>Xem thông báo</h1>
+      </div>
+      <ol class="breadcrumb" style="width: 80%">
+	<?php
+           echo '<li><a href="'.$_SESSION['BASE_URL'].'/controllers/user/trang_chu.php">Trang chủ</a></li>';
+           echo '<li><a href="'.$_SESSION['BASE_URL'].'/controllers/user/trang_chu.php">Thông báo</a></li>';
+           echo '<li class="active">'.'<a href="'.$_SESSION['BASE_URL'].'/controllers/user/trang_chu.php">'.htmlspecialchars($post_obj-> get_name_category_by_category_id_post($_GET['post_id'])).'</a>'.'</li>';
+	?>
+      </ol>
+          <div class="panel panel-info" style="width: 80%">
+        <div class="panel-heading">
+      <?php
+             $row_post = mysqli_fetch_assoc( $post);
+        echo htmlspecialchars($row_post['title']);
+      ?>
+        </div>
+        <div class="panel-body">
+      <?php
+       echo '<h2 style="text-align: center;">'.htmlspecialchars($row_post['header']).'</h2>'.'<pre>'.htmlspecialchars($row_post['content']).'</pre>';
+       	   if( $row_post['file_attack'] != ""){
+	   echo '<a href="'.$_SESSION['BASE_URL'].'/etc/file/'.htmlspecialchars($row_post['file_attack']).'" >File đính kèm</a>';
+	   }
+       ?>
+        </div>
+	<?php
+           echo '<div class="panel-footer">Ngày: '.htmlspecialchars($row_post['date_post']).'</div>';
+	   ?>
+      </div>
+    </div>
+      </div>
+    <?php
+       include $_SESSION['BASE_PATH'].'/views/user/footer.html';
+       ?>
+    
+  </body>
+
+</html>

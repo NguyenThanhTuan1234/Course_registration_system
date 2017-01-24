@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Trang chủ</title>
+    <?php
+       echo '<base href="'.$_SESSION['BASE_URL'].'/" />';
+       echo  '<link rel="icon" href="'.$_SESSION['BASE_URL'].'//etc/img/HUST_logo.jpg">';
+       ?>   
+    <link rel="stylesheet" href="etc/css/bootstrap.min.css">
+    <link rel="stylesheet" href="etc/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="etc/css/admin_custom.css">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="etc/js/bootstrap.min.js"></script>
+  </head>
+  
+  <body>
+     <?php $page = 'trang chu';
+	  include $_SESSION['BASE_PATH'].'/views/user/navbar.html';
+	  ?>
+    
+    <div class="container-fluid">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+      <div class="page-header">
+        <h1>Trang chủ</h1>
+      </div>
+      <div class="col-sm-8">
+        <div class="panel panel-info">
+          <div class="panel-heading"><b>Thông báo của ban Quản trị</b></div>
+          <div class="list-group">
+	    <?php
+	       $count = 0;
+	       while( $row_post_admin = mysqli_fetch_assoc( $result_post_admin ) ){
+	       echo '<a href="'.$_SESSION['BASE_URL'].'/controllers/user/view_post.php?'.'category=0&'.'post_id='.htmlspecialchars($row_post_admin['post_id']).'" class="list-group-item">';
+	       echo '<h4 class="list-group-item-heading">'.htmlspecialchars($row_post_admin['title']).'</h4>';
+	       echo '<p class="list-group-item-text">'.htmlspecialchars($row_post_admin['brief']).'</p>';
+	       echo '</a>';
+	       $count= $count + 1;
+	       if ( $count > 5){
+	       break;
+	       }
+	       }
+	       ?>
+          </div>
+        </div>
+    
+        <div class="panel panel-info">
+          <div class="panel-heading"><b>Thông báo đăng ký học tập</b></div>
+          <div class="list-group">
+	    <?php
+	       $count = 0;
+	       while( $row_post_register_class = mysqli_fetch_assoc( $result_post_register_class ) ){
+	       echo '<a href="'.$_SESSION['BASE_URL'].'/controllers/user/view_post.php?'.'category=1&'.'post_id='.htmlspecialchars($row_post_register_class['post_id']).'" class="list-group-item">';
+	       echo '<h4 class="list-group-item-heading">'.htmlspecialchars($row_post_register_class['title']).'</h4>';
+	       echo '<p class="list-group-item-text">'.htmlspecialchars($row_post_register_class['brief']).'</p>';
+	       echo '</a>';
+	       $count = $count + 1;
+	       if( $count > 5){
+	       break;
+	       }
+	       }
+	       ?>
+          </div>
+        </div>
+  
+        <div class="panel panel-info">
+          <div class="panel-heading"><b>Thông báo xét nhận đồ án tốt nghiệp</b></div>
+          <div class="list-group">
+	    <?php
+	       $count = 0;
+	       while( $row_post_graduate_project = mysqli_fetch_assoc( $result_post_graduate_project ) ){
+	       echo '<a href="'.$_SESSION['BASE_URL'].'/controllers/user/view_post.php?'.'category=2&'.'post_id='.htmlspecialchars($row_post_graduate_project['post_id']).'" class="list-group-item">';
+	       echo '<h4 class="list-group-item-heading">'.htmlspecialchars($row_post_graduate_project['title']).'</h4>';
+	       echo '<p class="list-group-item-text">'.htmlspecialchars($row_post_graduate_project['brief']).'</p>';
+	       echo '</a>';
+	       $count = $count + 1;
+	       if( $count > 5){
+	       break;
+	       }	       
+	       }
+	       ?>
+          </div>
+        </div>
+  
+        <div class="panel panel-info">
+          <div class="panel-heading"><b>Thông báo xét tốt nghiệp</b></div>
+          <div class="list-group">
+	    <?php
+	       $count = 0;
+	       while( $row_post_graduate_consider = mysqli_fetch_assoc( $result_post_graduate_consider ) ){
+	       echo '<a href="'.$_SESSION['BASE_URL'].'/controllers/user/view_post.php?'.'category=3&'.'post_id='.htmlspecialchars($row_post_graduate_consider['post_id']).'" class="list-group-item">';
+	       echo '<h4 class="list-group-item-heading">'.htmlspecialchars($row_post_graduate_consider['title']).'</h4>';
+	       echo '<p class="list-group-item-text">'.htmlspecialchars($row_post_graduate_consider['brief']).'</p>';
+	       echo '</a>';
+	       $count = $count + 1;
+	       if( $count > 5){
+	       break;
+	       }	       
+	       }
+	       ?>
+          </div>
+        </div>
+  
+        <div class="panel panel-info">
+          <div class="panel-heading"><b>Thông báo xử lý học tập</b></div>
+          <div class="list-group">
+	    <?php
+	       $count = 0;
+	       while( $row_post_warning_study = mysqli_fetch_assoc( $result_post_warning_study ) ){
+	       echo '<a href="'.$_SESSION['BASE_URL'].'/controllers/user/view_post.php?'.'category=4&'.'post_id='.htmlspecialchars($row_post_warning_study['post_id']).'" class="list-group-item">';
+	       echo '<h4 class="list-group-item-heading">'.htmlspecialchars($row_post_warning_study['title']).'</h4>';
+	       echo '<p class="list-group-item-text">'.htmlspecialchars($row_post_warning_study['brief']).'</p>';
+	       echo '</a>';
+	       $count = $count + 1;
+	       if( $count > 5){
+	       break;
+	       }	       
+	       }
+	       ?>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+          
+  </div>
+  </body>
+</html>

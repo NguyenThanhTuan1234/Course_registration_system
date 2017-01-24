@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Mở/đóng đăng ký lớp</title>
+    <?php
+       echo '<base href="'.$_SESSION['BASE_URL'].'/" />';
+       echo  '<link rel="icon" href="'.$_SESSION['BASE_URL'].'//etc/img/HUST_logo.jpg">';
+       ?>
+    <link rel="stylesheet" href="etc/css/bootstrap.min.css">
+    <link rel="stylesheet" href="etc/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="etc/css/admin_custom.css">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="etc/js/bootstrap.min.js"></script>
+  </head>
+
+  <body>
+    <?php $page = 'mo va dong dang ky lop';
+	  include $_SESSION['BASE_PATH'].'/views/admin/admin_navbar.html';
+	  ?>
+
+    <div class="container-fluid">
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <h1 class="page-header">Mở/đóng đăng ký lớp</h1>
+
+        <form class="form-horizontal" role="form" method="post" action="" >
+          <div class="form-group">
+            <label class="col-sm-2 control-label" style="text-align:left;">Học kỳ</label>
+            <div class="col-sm-2">
+              <select name="semester_select" class="form-control">
+		<?php
+		 while ( $row_list_of_semester = mysqli_fetch_assoc($list_of_semester)){
+		 if ( $selected_semester == $row_list_of_semester['semester']){
+		 echo '<option value="'.$row_list_of_semester['semester'].'" selected>'.$row_list_of_semester['semester'].'</option>';
+		 } else {
+		 echo '<option value="'.$row_list_of_semester['semester'].'" >'.$row_list_of_semester['semester'].'</option>';
+		 }
+		 }
+		 ?>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" style="text-align:left;">Khoa/viện</label>
+            <div class="col-sm-4">
+              <select name="course_select" class="form-control">
+	      <?php
+		 if ($selected_course == "default"){
+		 echo '<option value="default" selected>Chọn khoa viện</option>';
+		 } else {
+		 echo '<option value="default" >Chọn khoa viện</option>';
+		 }
+		 while ( $row_list_of_course = mysqli_fetch_assoc($list_of_course) ){
+		 if ( $row_list_of_course['course'] == $selected_course){
+		 echo '<option value="'.$row_list_of_course['course'].'" selected >'.$row_list_of_course['course'].'</option>';
+		 } else {
+		 echo '<option value="'.$row_list_of_course['course'].'">'.$row_list_of_course['course'].'</option>';
+		 }
+		 }
+		 ?>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputSubjectId" class="col-sm-2 control-label" style="text-align:left;">Mã học phần</label>
+            <div class="col-sm-4">
+	    <?php
+	       if ( isset($last_id_subject)){
+	       echo '<input name="id_subject" value="'.$last_id_subject.'" type="text" class="form-control" id="inputSubjectId" placeholder="Nhập mã học phần">';
+	       } else {
+	       echo '<input name="id_subject" type="text" class="form-control" id="inputSubjectId" placeholder="Nhập mã học phần">';
+	       }
+	       ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputClassId" class="col-sm-2 control-label" style="text-align:left;">hoặc mã lớp</label>
+            <div class="col-sm-4">
+	    <?php
+	       if( isset($last_id_class)){
+	       echo '<input name="id_class" value="'.$last_id_class.'" type="text" class="form-control" id="inputClassId" placeholder="Nhập mã lớp">';
+	       } else {
+	       echo '<input name="id_class" type="text" class="form-control" id="inputClassId" placeholder="Nhập mã lớp">';
+	       }
+	       ?>
+            </div>
+	    <?php
+               if ( isset($error_find_class) ){
+               echo '<div class="alert alert-warning alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                      <strong>Cảnh báo! </strong>';
+               echo $error_find_class;
+               echo '</div>';
+               unset($error_find_class);
+               }
+               ?>
+            <div class="col-sm-6">
+              <button name="find_register_class" type="submit" class="btn btn-primary">Tìm</button>
+            </div>
+          </div>
+        </form>
+
+        <div class="panel panel-primary">
+        <div class="panel-heading" style="text-align:center;">
+          <b>Danh sách các lớp</b>
+        </div>
+
+
+
+
+	<form method="post" action="">
+        <div class="panel-body">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>Mã lớp</th>
+                <th>Mã HP</th>
+                <th>Tên học phần</th>
+                <th>Ghi chú</th>
+                <th>Min ĐK</th>
+                <th>Max ĐK</th>
+                <th>Đã ĐK</th>
+                <th>Khoa/viện</th>
+                <th>Trạng thái</th>
+                <th>Đặt trạng thái</th>
+              </tr>
+            </thead>
+            <tbody>
+
+
+
+
+
+
+<?php
+if ( isset ( $list_class ) ){
+
+  while ( $row_of_list_class = mysqli_fetch_assoc($list_class)){
+    $time_table_of_class = $class_obj->get_time_class_by_id( $row_of_list_class['id_class'] );
+    $rowsp = mysqli_num_rows( $time_table_of_class);
+    echo '<tr>';
+    echo '<td>'.$row_of_list_class['id_class'].'</td>';
+    echo '<td>'.$row_of_list_class['id_subject'].'</td>';
+    echo '<td>'.$row_of_list_class['name_subject'].'</td>';
+    echo '<td>'.$row_of_list_class['note'].'</td>';
+    echo '<td>'.$row_of_list_class['min_sign'].'</td>';
+    echo '<td>'.$row_of_list_class['max_sign'].'</td>';
+    echo '<td>'.$row_of_list_class['signed'].'</td>';
+    echo '<td>'.$row_of_list_class['course'].'</td>';
+    echo '<td>'.$row_of_list_class['status'].'</td>';
+    echo '<td>';
+    echo'<div class="btn-group" data-toggle="buttons">';
+    if( $row_of_list_class['status'] == "Đóng đăng kí"){
+      echo '<label class="btn btn-primary btn-xs">';
+      echo '<input type="radio" name="'.$row_of_list_class['id_class'].'" value="open" id="Open" > Mở';
+		      echo '</label>';
+      echo '<label class="btn btn-primary btn-xs active">';
+      echo '<input type="radio" name="'.$row_of_list_class['id_class'].'" value="close" id="Close" checked> Đóng';
+      echo '</label>';
+    } else {
+      echo '<label class="btn btn-primary btn-xs active">';
+      echo '<input type="radio" name="'.$row_of_list_class['id_class'].'" value="open" id="Open" checked> Mở';
+      echo '</label>';
+      echo '<label class="btn btn-primary btn-xs">';
+      echo '<input type="radio" name="'.$row_of_list_class['id_class'].'" value="close" id="Close" > Đóng';
+      echo '</label>';
+    }
+
+    echo '</div>';
+    echo '</td>';
+    echo '</tr>';
+  }
+}
+?>
+
+
+
+
+
+
+
+            </tbody>
+          </table>
+        </div>
+        <div class="panel-footer clearfix">
+	  <?php
+               if ( isset($sucess) ){
+               echo '<div class="alert alert-success alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                      <strong>Thành công! </strong>';
+               echo $sucess;
+               echo '</div>';
+               unset($sucess);
+               }
+               ?>
+          <div class="col-sm-offset-4 col-sm-4" style="text-align:center;">
+            <button name="submit" type="submit" class="btn btn-primary btn-block">Xác nhận</button>
+          </div>
+        </div>
+	</form>
+
+
+
+
+      </div>
+
+      </div>
+    </div>
+
+  </body>
+
+</html>

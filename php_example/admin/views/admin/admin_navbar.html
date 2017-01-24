@@ -1,0 +1,77 @@
+
+<!doctype html>
+<html>
+<head>
+  <title>Hệ thống Quản lý đào tạo</title>
+  <meta charset="utf-8">
+  <meta name="keywords" content="Hệ thống, đào tạo, quản lý, quản lý đào tạo" />
+  <meta name="description" content="Hệ thống Quản lý đào tạo" />
+  <link rel="stylesheet" type="text/css" href="etc/css/style.css"/>
+  <link rel="shortcut icon" href="etc/img/favicon.ico" type="image/x-icon" />
+  <script type="text/javascript" src="etc/js/jquery.js"></script>
+  <script type="text/javascript" src="etc/js/script.js"></script>
+  <script type="text/javascript" src="etc/js/jquery-ui-1.10.2.custom.js"></script>
+  <link rel="stylesheet" href="etc/css/ui-lightness/jquery-ui-1.10.2.custom.css" />
+  <link rel="stylesheet" href="etc/css/jmetro/jquery-ui-1.10.2.custom.css" />
+</head>
+<body>
+  <div id="pageWrapper">
+    <div id="header">
+    </div>
+    <div id="nav">
+        <div  id="menu" >
+      </div>
+      <div  id="login">
+        <?php
+          echo '<a>Xin chào '.$_SESSION['fullname'].'</a>';
+          echo '<a href="'.$_SESSION['BASE_URL'].'/controllers/admin/admin_logout.php">| Đăng xuất</a>';
+        ?>
+      </div>
+    </div> 
+  <div id="contentWrapper" >
+  <div id="leftSide" >
+    <div class="group-box" >
+      <div class="title">Sinh Viên</div>
+      <div class="group-box-content">
+        <ul>
+        <?php echo '<li><a href="'.$_SESSION['BASE_URL'].'/controllers/admin/admin_themsv.php"'; ?> <?php if ($page == 'them sinh vien') { ?> list-group-item-success <?php } ?>">Thêm sinh viên</a></li>
+        <?php echo '<li><a href="'.$_SESSION['BASE_URL'].'/controllers/admin/admin_suasv.php"'; ?> <?php if ($page == 'sua sinh vien') { ?> list-group-item-success <?php } ?>">Sửa thông tin sinh viên</a></li>
+        <?php echo '<li><a href="'.$_SESSION['BASE_URL'].'/controllers/admin/admin_matkhausv.php"'; ?> <?php if ($page == 'mat khau sinh vien') { ?> list-group-item-success <?php } ?>">Cấp lại mật khẩu sinh viên</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="group-box">
+      <div class="title">Cập nhật điểm</div>
+      <div class="group-box-content">
+        <ul>
+        <?php echo '<li><a href="'.$_SESSION['BASE_URL'].'/controllers/admin/admin_diemlophoc.php"'; ?><?php if ($page == 'diem lop hoc') { ?> list-group-item-success <?php } ?>">Điểm lớp học</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="group-box">
+      <div class="title">Quản lý lớp</div>
+      <div class="group-box-content">
+        <ul>
+        <?php echo '<li><a href="'.$_SESSION['BASE_URL'].'/controllers/admin/admin_themlophoc.php"'; ?> <?php if ($page == 'them lop') { ?> list-group-item-success <?php } ?>">Thêm lớp</a></li>
+        </ul>
+      </div>
+      </div>
+      <div class="group-box">
+      <div class="title">Đăng kí</div>
+      <div class="group-box-content">
+        <ul>
+         <?php echo '<li><a href="'.$_SESSION['BASE_URL'].'/controllers/admin/admin_modongdangkylop.php"'; ?> <?php if ($page == 'sua lop') { ?> list-group-item-success <?php } ?>">Mở/đóng đăng kí</a></li>
+        </ul>
+      </div>
+      </div>
+      <div class="group-box">
+      <div class="title">Thông báo</div>
+      <div class="group-box-content">
+        <ul>
+            <?php echo '<li><a href="'.$_SESSION['BASE_URL'].'/controllers/admin/admin_vietthongbao.php"'; ?> <?php if ($page == 'viet thong bao') { ?> list-group-item-success <?php } ?>">Viết thông báo</a></li>
+        <?php echo '<li><a href="'.$_SESSION['BASE_URL'].'/controllers/admin/admin_suathongbao.php"'; ?>  <?php if ($page == 'sua thong bao') { ?> list-group-item-success <?php } ?>">Sửa thông báo</a></li>
+        <?php echo '<li><a href="'.$_SESSION['BASE_URL'].'/controllers/admin/admin_xoathongbao.php"'; ?><?php if ($page == 'xoa thong bao') { ?> list-group-item-success <?php } ?>">Xoá thông báo</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
